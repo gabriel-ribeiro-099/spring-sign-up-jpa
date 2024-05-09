@@ -5,9 +5,13 @@
     <title>Login</title>
 </head>
 <body>
-    <h2>Login</h2>
-    <form th:action="@{/login}" method="post">
-		 <fieldset>
+<div>
+    <h2><a href="/login">Login</a></h2>
+    <h2><a href="/cad">Cadastre-se</a></h2>
+
+</div>
+<form th:action="@{/login}" method="post">
+    <fieldset>
         <div>
             <label for="username">User:</label>
             <input type="text" id="username" name="username" />
@@ -25,7 +29,7 @@
         <p th:if="${param.logout}">
             You have been logged out.
         </p>
-        </fieldset>
-    </form>
+    </fieldset>
+</form>
 </body>
 </html>

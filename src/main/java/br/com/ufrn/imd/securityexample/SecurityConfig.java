@@ -1,6 +1,6 @@
 package br.com.ufrn.imd.securityexample;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,19 +24,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/public/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .permitAll()
-            )
-            .logout(logout -> logout.permitAll());
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/public/**","/cad" ,"/cadastro").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll());
 
         return http.build();
     }
-    
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -45,9 +45,10 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return username -> userRepository.findByUsername(username)
-            .map(user -> new User(user.getUsername(), user.getPassword(), new ArrayList<>()))
-            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .map(user -> new User(user.getUsername(), user.getPassword(), Collections.emptyList()))
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
