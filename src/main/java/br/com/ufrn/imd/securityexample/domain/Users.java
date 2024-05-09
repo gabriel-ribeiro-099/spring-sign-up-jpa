@@ -3,7 +3,7 @@ package br.com.ufrn.imd.securityexample.domain;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "springjpaex")
+@Table(name = "JPA-DB")
 public class Users {
 
 

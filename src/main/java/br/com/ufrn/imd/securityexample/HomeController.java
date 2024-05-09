@@ -19,21 +19,21 @@ public class HomeController {
     @GetMapping("/cadastro")
     public String cadastro(Model model) {
         model.addAttribute("user", new Users());
-        return "cadastro";
+        return "cad";
     }
 
     @PostMapping("/cadastro")
     public String registerUserAccount(@ModelAttribute("user") @Validated Users user,
                                       BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "cadastro";
+            return "cad";
         }
 
         try {
             userService.save(user);
         } catch (RuntimeException e) {
             result.rejectValue("username", "user.username", e.getMessage());
-            return "cadastro";
+            return "cad";
         }
 
         return "redirect:/login";
